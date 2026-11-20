@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINKIFY | Vendor Price Search</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <h2>LINKIFY</h2>
+            <span>Vendor Price Search</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="active">Dashboard</a>
+            <a href="#search">Domain Search</a>
+            <a href="#vendors">Vendors</a>
+            <a href="#sheets">Google Sheets</a>
+            <a href="#listings">All Listings</a>
+            <a href="#history">Search History</a>
+            <a href="#settings">Settings</a>
+        </nav>
+
+        <button id="logoutButton" class="logout-button">
+            Logout
+        </button>
+    </aside>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-main">
+
+        <!-- Header -->
+        <header class="topbar" id="dashboard">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome to LINKIFY Vendor Price Search System</p>
+            </div>
+
+            <div class="admin-label" id="adminEmail">
+                Loading...
+            </div>
+        </header>
+
+        <!-- Domain Search -->
+        <section class="search-panel" id="search">
+            <h2>Search Website Domain</h2>
+            <p>Find website prices across all your vendors.</p>
+
+            <div class="search-box">
+                <div class="search-input-wrap">
+                    <input
+                        type="text"
+                        id="domainSearch"
+                        placeholder="Enter domain, e.g. example.com"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearSearchButton"
+                        class="clear-search-button"
+                        aria-label="Clear search"
+                        title="Clear search"
+                        hidden
+                    >
+                        &times;
+                    </button>
+                </div>
+
+                <button
+                    type="button"
+                    id="searchButton"
+                >
+                    Search Domain
+                </button>
+                       </div>
+
+            <div id="searchResults" class="search-results"></div>
+
+        </section>
+
+        <!-- Statistics -->
+
+        <!-- Statistics -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span>Total Vendors</span>
+                <h2 id="vendorCount">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <span>Google Sheets</span>
+                <h2 id="sheetCount">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <span>Total Listings</span>
+                <h2 id="listingCount">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <span>Active Offers</span>
+                <h2 id="activeCount">0</h2>
+            </div>
+        </section>
+
+        <!-- Vendor Management -->
+        <section class="content-panel" id="vendors">
+            <div class="section-heading">
+                <div>
+                    <h2>Vendor Management</h2>
+                    <p>Add and manage your guest posting vendors.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="showVendorForm"
+                >
+                    + Add Vendor
+                </button>
+            </div>
+
+            <form id="vendorForm" class="vendor-form hidden">
+                <h3 id="vendorFormTitle">Add New Vendor</h3>
+
+                <label for="vendorName">Vendor Name</label>
+                <input
+                    type="text"
+                    id="vendorName"
+                    placeholder="Enter vendor name"
+                    required
+                    maxlength="150"
+                >
+
+                <label for="vendorNotes">Notes (Optional)</label>
+                <textarea
+                    id="vendorNotes"
+                    placeholder="Enter vendor details"
+                    rows="3"
+                ></textarea>
+
+                <div class="form-actions">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                        id="saveVendor"
+                    >
+                        Save Vendor
+                    </button>
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="cancelVendor"
+                    >
+                        Cancel
+                    </button>
+                </div>
+
+                <p id="vendorMessage"></p>
+            </form>
+
+            <div class="vendor-table-wrap">
+                <table class="vendor-table">
+                    <thead>
+                        <tr>
+                            <th>Vendor Name</th>
+                            <th>Notes</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="vendorTableBody">
+                        <tr>
+                            <td colspan="5">Loading vendors...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Google Sheets Management -->
+        <section class="content-panel" id="sheets">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Google Sheets Management</h2>
+                    <p>Connect and manage one Google Sheet per vendor.</p>
+                </div>
+            </div>
+
+            <!-- Connect Sheet Form -->
+            <div class="sheet-connect-box">
+
+                <h3>Connect Vendor Google Sheet</h3>
+
+                <form id="sheetConnectForm">
+
+                    <label for="sheetVendor">
+                        Select Vendor
+                    </label>
+
+                    <select id="sheetVendor" required>
+                        <option value="">Loading vendors...</option>
+                    </select>
+
+                    <label for="spreadsheetUrl">
+                        Google Sheet URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="spreadsheetUrl"
+                        placeholder="Paste Google Sheet URL here"
+                        required
+                    >
+
+                    <div class="form-actions">
+                        <button
+                            type="submit"
+                            class="primary-button"
+                            id="connectSheetButton"
+                        >
+                            Connect Sheet
+                        </button>
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            id="loadTabsButton"
+                            disabled
+                        >
+                            Load Tabs
+                        </button>
+                    </div>
+
+                </form>
+
+                <p id="sheetMessage"></p>
+
+                <!-- Tab Selection -->
+                <div id="sheetTabsContainer" class="hidden">
+
+                    <h3>Select Sheet Tabs</h3>
+
+                    <p>
+                        Select the tabs you want to import into the database.
+                    </p>
+
+                    <div id="sheetTabsList"></div>
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="saveSheetButton"
+                    >
+                        Save Sheet Connection
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Connected Sheets -->
+            <div class="connected-sheets">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Connected Vendor Sheets</h3>
+                        <p>Manage, sync or delete connected sheet data.</p>
+                    </div>
+                </div>
+
+                <div class="vendor-table-wrap">
+                    <table class="vendor-table">
+
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>Google Sheet</th>
+                                <th>Selected Tabs</th>
+                                <th>Last Sync</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="connectedSheetsBody">
+                            <tr>
+                                <td colspan="5">
+                                    Loading connected sheets...
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- All Listings -->
+        <section class="content-panel" id="listings">
+            <h2>All Listings</h2>
+            <p>Imported website listings will appear here.</p>
+        </section>
+
+        <!-- Search History -->
+        <section class="content-panel" id="history">
+            <h2>Search History</h2>
+            <p>Your previous domain searches will appear here.</p>
+        </section>
+
+        <!-- Settings -->
+        <section class="content-panel" id="settings">
+            <h2>Settings</h2>
+            <p>Application settings will be available here.</p>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="js/dashboard.js"></script>
+    <script type="module" src="js/vendors.js"></script>
+    <script type="module" src="js/sheets.js"></script>
+    <script type="module" src="js/search.js"></script>
+
+</body>
+</html>
