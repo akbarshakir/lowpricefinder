@@ -37,7 +37,7 @@ const FIELD_OPTIONS = [
 const ALIASES = {
     domain: [
     "website", "websites", "domain", "domains",
-    "url", "urls", "site", "site name","website list", "self admin access and authors sites ",
+    "url", "urls", "site", "site name","website list", "self admin access and authors sites",
     "website url", "website name", "domains/url's","guest post site name","websites url", "urls", "ulr", "site", "site name","guest post sites url","website / domain"
 ],
     website_status: [
